@@ -1,4 +1,4 @@
-import __future__
+from __future__ import division
 import os,copy
 
 import annlib_adaptbx

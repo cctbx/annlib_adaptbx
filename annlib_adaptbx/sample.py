@@ -1,3 +1,4 @@
+from __future__ import division
 import math,os,StringIO
 from annlib_ext import AnnAdaptor
 from scitbx.array_family import flex
