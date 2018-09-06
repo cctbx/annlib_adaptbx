@@ -30,7 +30,7 @@ def excercise_nearest_neighbor():
   A = AnnAdaptor(data,2)# construct k-d tree for reference set
   A.query(data)               # find nearest neighbors of query points
 
-  for i in range(len(A.nn)):
+  for i in xrange(len(A.nn)):
     #print "Neighbor of (%7.1f,%7.1f), index %6d distance %4.1f"%(
     #data[2*i],data[2*i+1],A.nn[i],math.sqrt(A.distances[i]))
     assert A.nn[i]!=i
@@ -38,14 +38,14 @@ def excercise_nearest_neighbor():
   A = AnnAdaptorSelfInclude(data,2)# construct k-d tree for reference set
   A.query(data)               # find nearest neighbors of query points
 
-  for i in range(len(A.nn)):
+  for i in xrange(len(A.nn)):
     #print "Neighbor of (%7.1f,%7.1f), index %6d distance %4.1f"%(
     #data[2*i],data[2*i+1],A.nn[i],math.sqrt(A.distances[i]))
     assert A.nn[i]==i
 
 def check_memory():
   data = data_from_files()
-  for x in range(1000):
+  for x in xrange(1000):
     AnnAdaptorSelfInclude(data,2).query(data)
 
 if __name__=="__main__":
