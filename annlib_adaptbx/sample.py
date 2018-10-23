@@ -1,6 +1,7 @@
 from __future__ import division
 from six.moves import range
-import math,os,StringIO
+from six.moves import StringIO
+import math,os
 from annlib_ext import AnnAdaptor
 from scitbx.array_family import flex
 from libtbx.utils import hashlib_md5
@@ -30,7 +31,7 @@ def data_from_files():
 def excercise_nearest_neighbor():
 
   data,query = data_from_files()
-  S = StringIO.StringIO()
+  S = StringIO()
 
   A = AnnAdaptor(data,2)       # construct k-d tree for reference set
   A.query(query)               # find nearest neighbors of query points
