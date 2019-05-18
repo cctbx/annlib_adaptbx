@@ -1,6 +1,7 @@
-from __future__ import division
+from __future__ import division, print_function
 from six.moves import range
 from six.moves import StringIO
+import six
 import math,os
 from annlib_ext import AnnAdaptor
 from scitbx.array_family import flex
@@ -15,13 +16,13 @@ def data_from_files():
   query = flex.double()
 
   D = open(os.path.join(tests,"data.txt"))
-  for line in D.xreadlines():  # x & y coordinates of reference set
+  for line in D:  # x & y coordinates of reference set
     point = line.strip().split(" ")
     data.append(float(point[0]))
     data.append(float(point[1]))
 
   Q = open(os.path.join(tests,"query.txt"))
-  for line in Q.xreadlines():  # x & y coordinates of query set
+  for line in Q:  # x & y coordinates of query set
     point = line.strip().split(" ")
     query.append(float(point[0]))
     query.append(float(point[1]))
@@ -37,14 +38,16 @@ def excercise_nearest_neighbor():
   A.query(query)               # find nearest neighbors of query points
 
   for i in range(len(A.nn)):
-    print >>S,"Neighbor of (%7.1f,%7.1f), index %6d distance %4.1f"%(
-    query[2*i],query[2*i+1],A.nn[i],math.sqrt(A.distances[i]))
+    print ("Neighbor of (%7.1f,%7.1f), index %6d distance %4.1f"%(
+    query[2*i],query[2*i+1],A.nn[i],math.sqrt(A.distances[i])), file = S)
 
   return S.getvalue()
 
 def gethash(longstring):
   m = hashlib_md5()
-  m.update(longstring)
+  m.update(longstring.encode("utf-8"))
+  if six.PY3:
+    return "".join(["%02X"%(a) for a in m.digest()])
   return "".join(["%02X"%ord(i) for i in m.digest()])
 
 def check_memory():
@@ -56,4 +59,4 @@ if __name__=="__main__":
   assert gethash(
     excercise_nearest_neighbor() ) == 'E486456DC3A225C40FE8A3A9D9A760E9'
   #check_memory()
-  print "OK"
+  print ("OK")

@@ -14,7 +14,7 @@ def data_from_files():
 
   i = 0
   D = open(os.path.join(tests,"data.txt"))
-  for line in D.xreadlines():  # x & y coordinates of reference set
+  for line in D:  # x & y coordinates of reference set
     point = line.strip().split(" ")
     data.append(float(point[0]))
     data.append(float(point[1]))
@@ -51,4 +51,4 @@ def check_memory():
 if __name__=="__main__":
   excercise_nearest_neighbor()
   #check_memory()
-  print "OK"
+  print ("OK")
