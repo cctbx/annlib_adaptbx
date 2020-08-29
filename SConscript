@@ -21,58 +21,59 @@ env_etc.annlib_common_includes = [
   env_etc.annlib_adaptbx_include[1],
 ]
 
-env = env_base.Clone(
-  SHLINKFLAGS=env_etc.shlinkflags)
-if (libtbx.manual_date_stamp < 20090819):
-  # XXX backward compatibility 2009-08-19
-  env.Replace(CCFLAGS=env_etc.ccflags_base)
-  env.Replace(CXXFLAGS=env_etc.cxxflags_base)
-  env.Replace(SHCXXFLAGS=env_etc.cxxflags_base)
+if not libtbx.env.module_is_installed("annlib_adaptbx"):
+  env = env_base.Clone(
+    SHLINKFLAGS=env_etc.shlinkflags)
+  env.Append(CPPPATH=env_etc.annlib_common_includes)
+  if (libtbx.manual_date_stamp < 20090819):
+    # XXX backward compatibility 2009-08-19
+    env.Replace(CCFLAGS=env_etc.ccflags_base)
+    env.Replace(CXXFLAGS=env_etc.cxxflags_base)
+    env.Replace(SHCXXFLAGS=env_etc.cxxflags_base)
 
-if (env_etc.static_libraries): builder = env.StaticLibrary
-else:                          builder = env.SharedLibrary
-builder(target='#lib/ann',
-  source = ["../annlib/src/ANN.cpp",
-            "../annlib/src/bd_fix_rad_search.cpp",
-            "../annlib/src/bd_pr_search.cpp",
-            "../annlib/src/bd_search.cpp",
-            "../annlib/src/bd_tree.cpp",
-            "../annlib/src/brute.cpp",
-            "../annlib/src/kd_dump.cpp",
-            "../annlib/src/kd_fix_rad_search.cpp",
-            "../annlib/src/kd_pr_search.cpp",
-            "../annlib/src/kd_search.cpp",
-            "../annlib/src/kd_split.cpp",
-            "../annlib/src/kd_tree.cpp",
-            "../annlib/src/kd_util.cpp",
-            "../annlib/src/perf.cpp",
-            "self_include/ANN.cpp",
-            "self_include/bd_fix_rad_search.cpp",
-            "self_include/bd_pr_search.cpp",
-            "self_include/bd_search.cpp",
-            "self_include/bd_tree.cpp",
-            "self_include/brute.cpp",
-            "self_include/kd_dump.cpp",
-            "self_include/kd_fix_rad_search.cpp",
-            "self_include/kd_pr_search.cpp",
-            "self_include/kd_search.cpp",
-            "self_include/kd_split.cpp",
-            "self_include/kd_tree.cpp",
-            "self_include/kd_util.cpp",
-            "self_include/perf.cpp",
-            "ann/ann_adaptor.cpp"
-           ],
-  CPPPATH=env_etc.annlib_common_includes )
+  if (env_etc.static_libraries): builder = env.StaticLibrary
+  else:                          builder = env.SharedLibrary
+  builder(target='#lib/ann',
+    source = ["../annlib/src/ANN.cpp",
+              "../annlib/src/bd_fix_rad_search.cpp",
+              "../annlib/src/bd_pr_search.cpp",
+              "../annlib/src/bd_search.cpp",
+              "../annlib/src/bd_tree.cpp",
+              "../annlib/src/brute.cpp",
+              "../annlib/src/kd_dump.cpp",
+              "../annlib/src/kd_fix_rad_search.cpp",
+              "../annlib/src/kd_pr_search.cpp",
+              "../annlib/src/kd_search.cpp",
+              "../annlib/src/kd_split.cpp",
+              "../annlib/src/kd_tree.cpp",
+              "../annlib/src/kd_util.cpp",
+              "../annlib/src/perf.cpp",
+              "self_include/ANN.cpp",
+              "self_include/bd_fix_rad_search.cpp",
+              "self_include/bd_pr_search.cpp",
+              "self_include/bd_search.cpp",
+              "self_include/bd_tree.cpp",
+              "self_include/brute.cpp",
+              "self_include/kd_dump.cpp",
+              "self_include/kd_fix_rad_search.cpp",
+              "self_include/kd_pr_search.cpp",
+              "self_include/kd_search.cpp",
+              "self_include/kd_split.cpp",
+              "self_include/kd_tree.cpp",
+              "self_include/kd_util.cpp",
+              "self_include/perf.cpp",
+              "ann/ann_adaptor.cpp"
+            ])
 
-if (not env_etc.no_boost_python):
-  Import("env_no_includes_boost_python_ext")
+  if (not env_etc.no_boost_python):
+    Import("env_no_includes_boost_python_ext")
 
-  env_annlib_boost_python_ext = env_no_includes_boost_python_ext.Clone()
+    env_annlib_boost_python_ext = env_no_includes_boost_python_ext.Clone()
 
-  env_etc.include_registry.append(
-    env=env_annlib_boost_python_ext,
-    paths=env_etc.annlib_common_includes + [env_etc.python_include])
+    env_etc.include_registry.append(
+      env=env_annlib_boost_python_ext,
+      paths=env_etc.annlib_common_includes + [env_etc.python_include])
 
-  Export("env_annlib_boost_python_ext")
+    Export("env_annlib_boost_python_ext")
 
-  SConscript("ann/boost_python/SConscript")
+    SConscript("ann/boost_python/SConscript")
