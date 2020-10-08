@@ -7,7 +7,7 @@ import libtbx.load_env
 annlib_under_build = libtbx.env.under_build("annlib_adaptbx")
 annlib_adaptbx_dir = os.path.dirname(annlib_adaptbx.__file__)
 annlib_under_build_include = os.path.join(annlib_under_build,"include")
-annlib_dir = os.path.join(os.path.dirname(annlib_adaptbx_dir),"annlib")
+annlib_dir = libtbx.env.dist_path("annlib")
 
 def yield_includes(search_mode):
   annlib_mode_include = os.path.join(annlib_under_build_include,
