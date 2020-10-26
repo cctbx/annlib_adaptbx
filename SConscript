@@ -1,7 +1,15 @@
 import libtbx.load_env
 Import("env_base","env_etc")
 
-env_etc.annlib_dist = libtbx.env.dist_path("annlib")
+try:
+  env_etc.annlib_dist = libtbx.env.dist_path("annlib")
+except KeyError:
+  from libtbx.env_config import get_local_env
+  local_env = get_local_env(build_dir=GetLaunchDir())
+  if local_env is not None:
+    env_etc.annlib_dist = local_env.find_in_repositories("annlib")
+  else:
+    raise
 env_etc.annlib_include = [env_etc.norm_join(env_etc.annlib_dist,"src"),
                           env_etc.norm_join(env_etc.annlib_dist,"include")]
 env_etc.annlib_adaptbx_dist = libtbx.env.dist_path("annlib_adaptbx")
