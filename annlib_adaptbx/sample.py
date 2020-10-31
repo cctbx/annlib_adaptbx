@@ -15,17 +15,17 @@ def data_from_files():
   data = flex.double()
   query = flex.double()
 
-  D = open(os.path.join(tests,"data.txt"))
-  for line in D:  # x & y coordinates of reference set
-    point = line.strip().split(" ")
-    data.append(float(point[0]))
-    data.append(float(point[1]))
+  with open(os.path.join(tests,"data.txt")) as D:
+    for line in D:  # x & y coordinates of reference set
+      point = line.strip().split(" ")
+      data.append(float(point[0]))
+      data.append(float(point[1]))
 
-  Q = open(os.path.join(tests,"query.txt"))
-  for line in Q:  # x & y coordinates of query set
-    point = line.strip().split(" ")
-    query.append(float(point[0]))
-    query.append(float(point[1]))
+  with open(os.path.join(tests,"query.txt")) as Q:
+    for line in Q:  # x & y coordinates of query set
+      point = line.strip().split(" ")
+      query.append(float(point[0]))
+      query.append(float(point[1]))
 
   return data,query
 

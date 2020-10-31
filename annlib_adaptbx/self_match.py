@@ -13,13 +13,13 @@ def data_from_files():
   query = flex.double()
 
   i = 0
-  D = open(os.path.join(tests,"data.txt"))
-  for line in D:  # x & y coordinates of reference set
-    point = line.strip().split(" ")
-    data.append(float(point[0]))
-    data.append(float(point[1]))
-    if i==1000:break
-    i+=1
+  with open(os.path.join(tests,"data.txt")) as D:
+    for line in D:  # x & y coordinates of reference set
+      point = line.strip().split(" ")
+      data.append(float(point[0]))
+      data.append(float(point[1]))
+      if i==1000:break
+      i+=1
 
   return data
 
